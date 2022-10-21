@@ -1,24 +1,24 @@
 const formularioCrearProducto = document.getElementById(
-  "formulario-crear-producto"
-);
+  'formulario-crear-producto'
+)
 
 const updateTable = async () => {
-  const tableContentElement = document.getElementById("table-content");
-  tableContentElement.innerHTML = "";
+  const tableContentElement = document.getElementById('table-content')
+  tableContentElement.innerHTML = ''
 
-  const response = await fetch("http://localhost:8080/api/products");
-  const { data } = await response.json();
+  const response = await fetch('http://localhost:8080/api/products')
+  const { data } = await response.json()
 
   data.forEach((product) => {
-    pushProductRow(product);
-  });
-};
+    pushProductRow(product)
+  })
+}
 
 const crearFormulario = (data) => {
-  const { id, title, price, thumbnail } = data;
+  const { id, title, price, thumbnail } = data
 
-  const editForm = document.createElement("form");
-  editForm.setAttribute("id", `formulario-editar-producto`);
+  const editForm = document.createElement('form')
+  editForm.setAttribute('id', `formulario-editar-producto`)
 
   editForm.innerHTML = `
   <div class="mb-3">
@@ -61,31 +61,34 @@ const crearFormulario = (data) => {
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
       Cerrar
     </button>
-  </div>`;
+  </div>`
 
-  editForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    const payload = Object.fromEntries(data.entries());
+  editForm.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const data = new FormData(e.target)
+    const payload = Object.fromEntries(data.entries())
 
-    const response = await fetch(`http://localhost:8080/api/products/${id}`, {
-      body: JSON.stringify(payload),
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    await updateTable();
-  });
+    const response = await fetch(
+      `http://localhost:8080/api/products/${id}`,
+      {
+        body: JSON.stringify(payload),
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+    await updateTable()
+  })
 
-  return editForm;
-};
+  return editForm
+}
 
 const pushProductRow = (product) => {
-  const { id, title, price, thumbnail } = product;
-  const tableContentElement = document.getElementById("table-content");
-  const tr = document.createElement("tr");
+  const { id, title, price, thumbnail } = product
+  const tableContentElement = document.getElementById('table-content')
+  const tr = document.createElement('tr')
   tr.innerHTML = `
   <th scope="row">${id}</th>
       <td>${title}</td>
@@ -106,51 +109,51 @@ const pushProductRow = (product) => {
         >
         <i class="bi bi-trash3-fill"></i>
         </button>
-    </td>`;
-  const button = tr.getElementsByTagName("button");
-  button[0].addEventListener("click", async (e) => {
-    const response = await fetch("/api/products/" + id);
-    const { data } = await response.json();
+    </td>`
+  const button = tr.getElementsByTagName('button')
+  button[0].addEventListener('click', async (e) => {
+    const response = await fetch('/api/products/' + id)
+    const { data } = await response.json()
 
-    const editForm = crearFormulario(data);
-    const modalBody = document.getElementById("modal-body-edit");
-    modalBody.innerHTML = "";
-    modalBody.appendChild(editForm);
-  });
+    const editForm = crearFormulario(data)
+    const modalBody = document.getElementById('modal-body-edit')
+    modalBody.innerHTML = ''
+    modalBody.appendChild(editForm)
+  })
 
-  button[1].addEventListener("click", async (e) => {
-    await fetch("/api/products/" + id, { method: "DELETE" });
-    await updateTable();
-  });
+  button[1].addEventListener('click', async (e) => {
+    await fetch('/api/products/' + id, { method: 'DELETE' })
+    await updateTable()
+  })
 
-  tableContentElement.appendChild(tr);
-};
+  tableContentElement.appendChild(tr)
+}
 
-formularioCrearProducto.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const data = new FormData(e.target);
-  const payload = Object.fromEntries(data.entries());
-  const response = await fetch("http://localhost:8080/api/products", {
+formularioCrearProducto.addEventListener('submit', async (e) => {
+  e.preventDefault()
+  const data = new FormData(e.target)
+  const payload = Object.fromEntries(data.entries())
+  const response = await fetch('http://localhost:8080/api/products', {
     body: JSON.stringify(payload),
-    method: "POST",
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
-  });
+  })
   if (response.status === 201) {
-    pushProductRow(await response.json());
+    pushProductRow(await response.json())
   }
-  e.target.reset();
-});
+  e.target.reset()
+})
 
 const initTable = async () => {
-  const response = await fetch("http://localhost:8080/api/products");
-  const { data } = await response.json();
+  const response = await fetch('http://localhost:8080/api/products')
+  const { data } = await response.json()
 
   for (let i = 0; i < data.length; i++) {
-    pushProductRow(data[i]);
+    pushProductRow(data[i])
   }
-};
+}
 
-initTable();
+initTable()

@@ -1,1 +1,1 @@
-module.exports = require("./exceptions");
+module.exports = require('./exceptions')
