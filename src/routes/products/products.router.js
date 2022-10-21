@@ -39,4 +39,22 @@ router.post("/", (req, res) => {
   res.status(201).json(newProduct);
 });
 
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+  // TODO: Aqui deberia haber uan validacion mas efectiva que solo verificar que no haya llegado nada
+  if (Object.entries(changes).length === 0) throw new ProductEmptyEntity();
+
+  // Modifico el producto en cuestion dentro de la base de datos
+  state.products = state.products.map((product) => {
+    if (product.id === parseInt(id)) {
+      product = { ...product, ...changes };
+    }
+    return product;
+  });
+
+  // Devolvemos la respuesta satisfactoria
+  res.status(204).send();
+});
+
 module.exports = router;
