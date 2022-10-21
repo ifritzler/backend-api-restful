@@ -57,4 +57,14 @@ router.put("/:id", (req, res) => {
   res.status(204).send();
 });
 
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  state.products = state.products.filter(
+    (product) => product.id !== parseInt(id)
+  );
+
+  res.status(204).send();
+});
+
 module.exports = router;
