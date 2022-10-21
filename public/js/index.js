@@ -6,9 +6,7 @@ const updateTable = async () => {
   const tableContentElement = document.getElementById('table-content')
   tableContentElement.innerHTML = ''
 
-  const response = await fetch(
-    `http://${window.location.origin}/api/products`
-  )
+  const response = await fetch(`/api/products`)
   const { data } = await response.json()
 
   data.forEach((product) => {
@@ -70,17 +68,14 @@ const crearFormulario = (data) => {
     const data = new FormData(e.target)
     const payload = Object.fromEntries(data.entries())
 
-    const response = await fetch(
-      `http://${window.location.origin}/api/products/${id}`,
-      {
-        body: JSON.stringify(payload),
-        method: 'PUT',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      }
-    )
+    const response = await fetch(`/api/products/${id}`, {
+      body: JSON.stringify(payload),
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
     await updateTable()
   })
 
@@ -135,17 +130,14 @@ formularioCrearProducto.addEventListener('submit', async (e) => {
   e.preventDefault()
   const data = new FormData(e.target)
   const payload = Object.fromEntries(data.entries())
-  const response = await fetch(
-    `http://${window.location.origin}/api/products`,
-    {
-      body: JSON.stringify(payload),
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }
-  )
+  const response = await fetch(`/api/products`, {
+    body: JSON.stringify(payload),
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
   if (response.status === 201) {
     pushProductRow(await response.json())
   }
@@ -153,9 +145,7 @@ formularioCrearProducto.addEventListener('submit', async (e) => {
 })
 
 const initTable = async () => {
-  const response = await fetch(
-    `http://${window.location.origin}/api/products`
-  )
+  const response = await fetch(`/api/products`)
   const { data } = await response.json()
 
   for (let i = 0; i < data.length; i++) {
