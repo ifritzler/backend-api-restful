@@ -7,7 +7,7 @@ const updateTable = async () => {
   tableContentElement.innerHTML = ''
 
   const response = await fetch(
-    `http://${window.location.origin}/api/products`
+    `https://${window.location.origin}/api/products`
   )
   const { data } = await response.json()
 
@@ -71,7 +71,7 @@ const crearFormulario = (data) => {
     const payload = Object.fromEntries(data.entries())
 
     const response = await fetch(
-      `http://${window.location.origin}/api/products/${id}`,
+      `https://${window.location.origin}/api/products/${id}`,
       {
         body: JSON.stringify(payload),
         method: 'PUT',
@@ -136,7 +136,7 @@ formularioCrearProducto.addEventListener('submit', async (e) => {
   const data = new FormData(e.target)
   const payload = Object.fromEntries(data.entries())
   const response = await fetch(
-    `http://${window.location.origin}/api/products`,
+    `https://${window.location.origin}/api/products`,
     {
       body: JSON.stringify(payload),
       method: 'POST',
@@ -154,7 +154,7 @@ formularioCrearProducto.addEventListener('submit', async (e) => {
 
 const initTable = async () => {
   const response = await fetch(
-    `http://${window.location.origin}/api/products`
+    `https://${window.location.origin}/api/products`
   )
   const { data } = await response.json()
 
