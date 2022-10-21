@@ -6,7 +6,13 @@ const updateTable = async () => {
   const tableContentElement = document.getElementById('table-content')
   tableContentElement.innerHTML = ''
 
+<<<<<<< HEAD
   const response = await fetch(`/api/products`)
+=======
+  const response = await fetch(
+    `https://${window.location.origin}/api/products`
+  )
+>>>>>>> 1ce8c3c5d73f3123d6f5f834b73b429c63826e21
   const { data } = await response.json()
 
   data.forEach((product) => {
